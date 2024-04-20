@@ -1,0 +1,62 @@
+/* Styling for the oval input field */
+.upperOval-input {
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black */
+    border-radius: 50px; /* Create the oval shape */
+    padding: 10px 40px; /* Padding for spacing within the oval */
+    text-align: center; /* Center the text */
+    font-size: 16px; /* Adjust text size */
+    color: white; /* White text for readability */
+    border: none; /* No visible border */
+    outline: none; /* Remove focus outline */
+    width: 300px; /* Adjust width for desired oval size */
+    height: 40px; /* Adjust height for desired oval size */
+    transition: background-color 0.3s; /* Smooth transition */
+  }
+  
+.upperOval-input:focus {
+    background-color: rgba(0, 0, 0, 0.5); /* Darken on focus for visibility */
+  }
+
+  /* Styling for the oval input field */
+.oval-input {
+    background-color: rgba(0, 0, 0, 0.3); /* Semi-transparent black */
+    border-radius: 50px; /* Create the oval shape */
+    padding: 10px 40px; /* Padding for spacing within the oval */
+    text-align: center; /* Center the text */
+    font-size: 16px; /* Adjust text size */
+    color: white; /* White text for readability */
+    border: none; /* No visible border */
+    outline: none; /* Remove focus outline */
+    width: 300px; /* Adjust width for desired oval size */
+    height: 40px; /* Adjust height for desired oval size */
+    transition: background-color 0.3s; /* Smooth transition */
+  }
+  
+  .oval-input:focus {
+    background-color: rgba(0, 0, 0, 0.5); /* Darken on focus for visibility */
+  }
+
+  .upperOval-input {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+  }
+  
+  .tabs a {
+    display: inline-block;
+    padding: 10px 30px;
+    background-color: teal;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-left: 5px;
+  }
+  
+  .tabs a:hover {
+    background-color: #555;
+  }
+  .container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+  }

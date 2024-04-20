@@ -8,9 +8,13 @@ import Home from './Home';
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
+  const [showTabs, setShowTabs] = useState(true); // Control tab visibility
+
+  
 
   const handlePageChange = (page) => {
     setCurrentPage(page);
+    setShowTabs(false);
   };
 
   const renderPage = () => {
@@ -33,17 +37,16 @@ function App() {
     <div class="ourLogo">  
       LOGO HERE 
     </div> 
-      <div class='container'>
-        
-        <div class="tabs">
-          <button onClick={() => handlePageChange('Karaoke')}>Karaoke</button>
 
-          <button onClick={() => handlePageChange('Sign Up')}>Sign Up</button>
-          <button onClick={() => handlePageChange('Log In')}>Log In</button>
-          
+       {showTabs && ( // Only render tabs if `showTabs` is true
+        <div className="container">
+          <div className="tabs">
+            <button onClick={() => handlePageChange('Karaoke')}>Karaoke</button>
+            <button onClick={() => handlePageChange('Sign Up')}>Sign Up</button>
+            <button onClick={() => handlePageChange('Log In')}>Log In</button>
+          </div>
         </div>
-      </div>
-      
+      )}
       {renderPage()}
 
     </>
