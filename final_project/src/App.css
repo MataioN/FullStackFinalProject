@@ -12,7 +12,7 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #F6B33E);
 }
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
@@ -39,4 +39,42 @@
 
 .read-the-docs {
   color: #888;
+}
+
+
+.tabs {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+}
+
+.tabs a {
+  display: inline-block;
+  padding: 10px 30px;
+  background-color: teal;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-left: 5px;
+}
+
+.tabs a:hover {
+  background-color: #555;
+}
+.container {
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.ourLogo {
+  position: absolute; /* Absolute positioning */
+  top: 0; /* Align to the top */
+  left: 0; /* Align to the left */
+  width: 100px; /* Adjust size as needed */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.content {
+  padding: 20px; /* Padding for content to avoid overlap with other elements */
 }

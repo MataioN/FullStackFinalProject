@@ -1,35 +1,53 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+
+import './App.css';
+import Karaoke from './Karaoke';
+import Home from './Home';
+
+
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [currentPage, setCurrentPage] = useState('home');
 
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+  };
+
+  const renderPage = () => {
+    switch (currentPage) {
+      case 'home':
+        return <Home />;
+      case 'Sign Up':
+        return <Performances />; // CHANGE TO SIGN UP 
+      case 'Karaoke':
+        return <Karaoke />; 
+      case 'Log In':
+        return <Members />;
+      default: 
+        return null;
+    }
+  };
+// PUT LOGO IN OURLOGO SECTION
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div class="ourLogo">  
+      LOGO HERE 
+    </div> 
+      <div class='container'>
+        
+        <div class="tabs">
+          <button onClick={() => handlePageChange('Karaoke')}>Karaoke</button>
+
+          <button onClick={() => handlePageChange('Sign Up')}>Sign Up</button>
+          <button onClick={() => handlePageChange('Log In')}>Log In</button>
+          
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      
+      {renderPage()}
+
     </>
-  )
+  );
 }
 
-export default App
+export default App;
