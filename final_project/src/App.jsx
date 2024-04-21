@@ -3,7 +3,8 @@ import { useState } from 'react';
 import './App.css';
 import Karaoke from './Karaoke';
 import Home from './Home';
-
+//import SignUp from './SignUp'; 
+//import LogIn from './LogIn';
 
 
 function App() {
@@ -11,7 +12,6 @@ function App() {
   const [showTabs, setShowTabs] = useState(true); // Control tab visibility
 
   
-
   const handlePageChange = (page) => {
     setCurrentPage(page);
     setShowTabs(false);
@@ -22,11 +22,11 @@ function App() {
       case 'home':
         return <Home />;
       case 'Sign Up':
-        return <Performances />; // CHANGE TO SIGN UP 
+        return <SignUp />; 
       case 'Karaoke':
         return <Karaoke />; 
       case 'Log In':
-        return <Members />;
+        return <LogIn />;
       default: 
         return null;
     }
