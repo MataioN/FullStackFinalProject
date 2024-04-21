@@ -4,7 +4,6 @@ import './Karaoke.css';
 
 function Karaoke() {
     const clientId = 'af3f950385974164af122690fca30b26';
-    const clientSecret = '6bec46930c344e7195b7e55d51f4bacf';
     const scope = 'user-read-recently-played user-top-read user-library-modify user-library-read playlist-read-private playlist-read-collaborative' 
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
@@ -18,10 +17,16 @@ function Karaoke() {
         let token = window.localStorage.getItem("token")
 
         if (!token && hash) {
-            token = hash.substring(1).split("&").find(elem => elem.startsWith("access_token")).split("=")[1]
+            const accessTokenParam = hash.substring(1).split("&").find(elem => elem.startsWith("access_token"));
+            if (accessTokenParam) {
+                token = accessTokenParam.split("=")[1];
 
-            window.location.hash = ""
-            window.localStorage.setItem("token", token)
+                // Clear the hash part of the URL
+                window.location.hash = "";
+                window.localStorage.setItem("token", token);
+            } else {
+                console.error("Access token not found in hash:", hash);
+        }
         }
 
         setToken(token)
