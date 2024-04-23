@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
 import './Karaoke.css';
+import axios from 'axios';
 
 function Karaoke() {
     const CLIENT_ID = 'af3f950385974164af122690fca30b26';
     const SCOPES = ['user-read-recently-played', 'user-top-read user-library-modify', 'user-library-read', 'playlist-read-private',  'playlist-read-collaborative' ];
     const params = new URLSearchParams(window.location.search);
     const code = params.get('code');
-    const REDIRECT_URI = "http://localhost:3000";
+    const REDIRECT_URI = "http://localhost:5173/";
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
     const RESPONSE_TYPE = "token" ;
     const [token, setToken] = useState("");
@@ -52,6 +53,20 @@ function Karaoke() {
         }
     }, []);
 
+    const getTopTracks = async () => {
+        try{
+            const data = await axios.get('https://api.spotify.com/v1/me/top/tracks?offset=0',{
+                headers: {
+                  Authorization: `Bearer ${token}`, // Include the token in the Authorization header
+                },
+              });
+            console.log(data);
+        }catch (error) {
+            console.error('Error Fetching Data', error);
+        }
+
+    }
+
     const handleLogin = () => {
         const authUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=${RESPONSE_TYPE}&scope=${SCOPES.join('%20')}`;
         window.location.href = authUrl;
@@ -70,6 +85,7 @@ function Karaoke() {
             ) : (
                 <div>
                     <p>Successfully authenticated with Spotify!</p>
+                    <button onClick={getTopTracks}>Get your top songs!</button>
                     <button onClick={handleLogout}>Logout</button>
                 </div>
             )}
