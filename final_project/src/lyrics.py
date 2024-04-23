@@ -33,7 +33,7 @@ def lyrics(artist_name, number_of_songs):
         # of author)
         lyrics_text2 = re.sub(r".*Get tickets.*as low as.*(\r?\n|\r)?", "", lyrics_text, flags=re.IGNORECASE)
         # Remove text with "Embed"
-        lyrics_text3 = re.sub(r"\d+Embed", "", lyrics_text2, flags=re.IGNORECASE)
+        lyrics_text3 = re.sub(r"\d+(\.\d+)?[KM]?Embed", "", lyrics_text2, flags=re.IGNORECASE)
 
     # Add this song's lyrics to the cumulative list
         all_lyrics.append(lyrics_text3)
@@ -41,4 +41,28 @@ def lyrics(artist_name, number_of_songs):
     file_name = os.path.join("lyrics", artist_name.lower() + '.txt')
     with open(file_name, 'w', encoding='utf-8') as f:
         f.write("\n\n---\n\n".join(all_lyrics))
-lyrics("Ed Sheeran", 4)
+
+def song_lyrics(song_title, artist_name):
+    song = genius.search_song(song_title, artist_name)
+    lyrics = song.lyrics
+    lyrics = re.sub(r"[\(\[].*?[\)\]]", "", lyrics)
+
+    # Join non-empty lines
+    lyrics = os.linesep.join([s for s in lyrics.splitlines() if s])
+
+    # Remove the first line and join the rest
+    lines = lyrics.split("\n")[1:] 
+     # Remove the first line        
+    lyrics_text = "\n".join(lines)
+
+        # Remove text with "get tickets" (for some reason was in every single lyric scrape, regardless of
+        # of author)
+    lyrics_text2 = re.sub(r".*Get tickets.*as low as.*(\r?\n|\r)?", "", lyrics_text, flags=re.IGNORECASE)
+        # Remove text with "Embed"
+    lyrics_text3 = re.sub(r"\d+(\.\d+)?[KM]?Embed", "", lyrics_text2, flags=re.IGNORECASE)
+    file_name = os.path.join("lyrics", song_title.lower() + '.txt')
+    with open(file_name, 'w', encoding='utf-8') as f:
+        f.write(lyrics_text3)
+
+song_lyrics("Young and Beautifl", "Lana Del Rey")
+
