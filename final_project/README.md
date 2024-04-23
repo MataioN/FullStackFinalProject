@@ -17,7 +17,7 @@ Password: authentication stuff
 Token: spotify authentication, null if not authenticated
 Spotify_id: can be used for api requests, null if not authenticated/logged in with spotify
 Session: can be the id of an active session or null if not in session
-Created at: timestamp
+Created at: timestamp 
 
 
 Sessions table: 
