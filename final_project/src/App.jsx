@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+
 
 import './App.css';
 import Karaoke from './Karaoke';
 import Home from './Home';
-//import SignUp from './SignUp';
-//import LogIn from './LogIn';
+import Account from './Account'
 
 
 function App() {
@@ -21,19 +22,17 @@ function App() {
     switch (currentPage) {
       case 'home':
         return <Home />;
-      case 'Sign Up':
-        return <SignUp />; 
       case 'Karaoke':
         return <Karaoke />; 
-      case 'Log In':
-        return <LogIn />;
+      case 'Account':
+        return <Account />;
       default: 
         return null;
     }
   };
 // PUT LOGO IN OURLOGO SECTION
   return (
-    <>
+    <Router>
     <div class="ourLogo">  
       LOGO HERE 
     </div> 
@@ -41,15 +40,18 @@ function App() {
        {showTabs && ( // Only render tabs if `showTabs` is true
         <div className="container">
           <div className="tabs">
+            <button onClick={() => handlePageChange('Account')}>Account</button>
             <button onClick={() => handlePageChange('Karaoke')}>Karaoke</button>
-            <button onClick={() => handlePageChange('Sign Up')}>Sign Up</button>
-            <button onClick={() => handlePageChange('Log In')}>Log In</button>
           </div>
         </div>
       )}
       {renderPage()}
 
-    </>
+      <Routes>
+        <Route path="/account" element={<Account />} /> {/* Route for the login/sign up page */}
+      </Routes>
+    </Router>
+
   );
 }
 
