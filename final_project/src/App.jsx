@@ -14,7 +14,7 @@ function App() {
 
   
   const handlePageChange = (page) => {
-    setCurrentPage(page);
+    setCurrentPage(page);gi
     setShowTabs(false);
   };
 
