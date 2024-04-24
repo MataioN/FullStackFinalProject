@@ -13,7 +13,11 @@
     "axios": "^1.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+<<<<<<< HEAD
     "react-router-dom": "^6.22.3"
+=======
+    "sqlite3": "^5.1.7"
+>>>>>>> 01e11f8d6ac38636e855e84a345709a8d0dbe822
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
