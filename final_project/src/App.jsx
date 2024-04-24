@@ -3,7 +3,7 @@ import { useState } from 'react';
 import './App.css';
 import Karaoke from './Karaoke';
 import Home from './Home';
-//import SignUp from './SignUp';
+import SignUp from './SignUp';
 //import LogIn from './LogIn';
 
 
@@ -21,7 +21,7 @@ function App() {
     switch (currentPage) {
       case 'home':
         return <Home />;
-      case 'Sign Up':
+      case 'SignUp':
         return <SignUp />; 
       case 'Karaoke':
         return <Karaoke />; 
