@@ -24,8 +24,8 @@ const Signup = () => {
           /> 
           <input 
             type="password"
-            placeholder="Enter confirm password"
-            value={ConfirmPassword}
+            placeholder="Confirm password"
+            value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
           />

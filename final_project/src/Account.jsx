@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Link, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 
 import Login from './Login';
 import Signup from './Signup';
@@ -20,7 +20,7 @@ function Account() {
             <nav>
                 <ul>
                     <li>
-                        <Link to="/">Login</Link>
+                        <Link to="/login">Login</Link>
                     </li>
                     <li>
                         <Link to="/signup">Signup</Link>
@@ -30,10 +30,8 @@ function Account() {
         
 
         <Routes>
-            <Route exact="true" path="/" element={<Login />} >
-            </Route>
-            <Route path="/signup" element={<Signup />}>
-            </Route>
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<Signup />} />
         </Routes>
         </div>
     </Router>
