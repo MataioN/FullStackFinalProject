@@ -8,6 +8,10 @@ import os
 import re
 import time
 
+from flask import Flask, request, jsonify
+app = Flask(__name__)
+
+
 GENIUS_API_TOKEN= 'DtP-ys_dzjNc76k_1tlslraP6whcgQLIYO_rk1rZLrPacAI8fKKTpNfrICXQmuzw'
 genius = lyricsgenius.Genius(GENIUS_API_TOKEN)
 
@@ -60,9 +64,11 @@ def song_lyrics(song_title, artist_name):
     lyrics_text2 = re.sub(r".*Get tickets.*as low as.*(\r?\n|\r)?", "", lyrics_text, flags=re.IGNORECASE)
         # Remove text with "Embed"
     lyrics_text3 = re.sub(r"\d+(\.\d+)?[KM]?Embed", "", lyrics_text2, flags=re.IGNORECASE)
-    file_name = os.path.join("lyrics", song_title.lower() + '.txt')
+    file_name = os.path.join("lyrics", song_title.lower())
     with open(file_name, 'w', encoding='utf-8') as f:
         f.write(lyrics_text3)
+    
+if __name__ == '__main__':
+    app.run(debug=True)
 
-song_lyrics("Young and Beautifl", "Lana Del Rey")
 
