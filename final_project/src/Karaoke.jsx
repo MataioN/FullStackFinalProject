@@ -66,13 +66,14 @@ function Karaoke() {
     };
 
     return (
-        <><div>
+        <div class= "main_div">
+            <div >
             <h1>Karaoke</h1>
         </div>
         {!token ? (
                 <button onClick={handleLogin}>Login to Spotify</button>
             ) : (
-                <div>
+                <div >
                     <p>Successfully authenticated with Spotify!</p>
                     <button onClick={getTopTracks}>Get your top songs!</button>
                     <button onClick={handleLogout}>Logout</button>
@@ -95,7 +96,7 @@ function Karaoke() {
         <div class="upperOval">
             <input type="text" class="upperOval-input" placeholder="Join a Party" />
         </div>
-        </>
+        </div>
     );
 }
 

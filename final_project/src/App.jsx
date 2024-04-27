@@ -6,6 +6,7 @@ import './App.css';
 import Karaoke from './Karaoke';
 import Home from './Home';
 import Account from './Account'
+import './background.css';
 
 
 function App() {
@@ -32,6 +33,37 @@ function App() {
   };
 // PUT LOGO IN OURLOGO SECTION
   return (
+    <div class = "background">
+        <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
+   <span></span>
     <Router>
     <div class="ourLogo">  
       LOGO HERE 
@@ -52,6 +84,7 @@ function App() {
       </Routes>
     </Router>
 
+    </div>
   );
 }
 
