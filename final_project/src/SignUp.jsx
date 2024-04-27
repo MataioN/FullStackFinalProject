@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './SignUp.css'
+import './Signup.css'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import axios from 'axios';

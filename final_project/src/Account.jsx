@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 
 import Login from './Login';
-import Signup from './SignUp';
+import Signup from './Signup';
 
 function Account() {
   return (
@@ -26,7 +26,7 @@ function Account() {
                         <Link to="/Login">Login</Link>
                     </li>
                     <li>
-                        <Link to="/SignUp">Signup</Link>
+                        <Link to="/Signup">Signup</Link>
                     </li>
                 </ul>
             </nav>
@@ -34,7 +34,7 @@ function Account() {
 
         <Routes>
             <Route path="/Login" element={<Login />} />
-            <Route path="/SignUp" element={<Signup />} />
+            <Route path="/Signup" element={<Signup />} />
         </Routes>
         </div>
     </Router>
