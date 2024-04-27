@@ -5,40 +5,13 @@ import axios from 'axios';
 
 function Karaoke() {
     const CLIENT_ID = 'af3f950385974164af122690fca30b26';
-    const SCOPES = ['user-read-recently-played', 'user-top-read user-library-modify', 'user-library-read', 'playlist-read-private',  'playlist-read-collaborative' ];
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get('code');
+    const SCOPES = ['user-read-recently-played', 'user-top-read user-library-modify', 'user-library-read', 'playlist-read-private',  'playlist-read-collaborative', 'user-read-private' ];
     const REDIRECT_URI = "http://localhost:5173/";
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
     const RESPONSE_TYPE = "token" ;
     const [token, setToken] = useState("");
-
-    /**useEffect(() => {
-        const hash = window.location.hash
-        let token = window.localStorage.getItem("token")
-
-        if (!token && hash) {
-            const accessTokenParam = hash.substring(1).split("&").find(elem => elem.startsWith("access_token"));
-            if (accessTokenParam) {
-                token = accessTokenParam.split("=")[1];
-
-                // Clear the hash part of the URL
-                window.location.hash = "";
-                window.localStorage.setItem("token", token);
-            } else {
-                console.error("Access token not found in hash:", hash);
-        }
-        }
-
-        setToken(token)
-
-    }, [])
-
-    const logout = () => {
-        setToken("")
-        window.localStorage.removeItem("token")
-    } **/
-
+    const [userprofile, setProfile]= useState(null);
+    
     useEffect(() => {
         // Check if the URL contains an access token (returned from Spotify authentication)
         const hashParams = window.location.hash.substring(1).split('&');
@@ -51,16 +24,32 @@ function Karaoke() {
             // Remove the access token from the URL
             window.history.pushState('', document.title, window.location.pathname);
         }
+        
+        const fetchProfile = async () => {
+            try {
+              const response = await axios.get('https://api.spotify.com/v1/me', {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                }
+              });
+      
+              setProfile(response.data);
+            } catch (error) {
+              console.error('Error fetching user profile:', error);
+            }
+          };
+          fetchProfile();
     }, []);
 
     const getTopTracks = async () => {
         try{
-            const data = await axios.get('https://api.spotify.com/v1/me/top/tracks?offset=0',{
+            let data = await axios.get('https://api.spotify.com/v1/me/top/tracks?offset=0',{
                 headers: {
                   Authorization: `Bearer ${token}`, // Include the token in the Authorization header
                 },
               });
             console.log(data);
+            
         }catch (error) {
             console.error('Error Fetching Data', error);
         }
@@ -87,6 +76,17 @@ function Karaoke() {
                     <p>Successfully authenticated with Spotify!</p>
                     <button onClick={getTopTracks}>Get your top songs!</button>
                     <button onClick={handleLogout}>Logout</button>
+                    <div>
+                    {userprofile ? (
+                    <div>
+                    <h3>Hi {userprofile.display_name}</h3>
+          
+                        </div>
+                    ) : (
+                        <div></div>
+                    )}
+    </div>
+                
                 </div>
             )}
         <div class="oval">
