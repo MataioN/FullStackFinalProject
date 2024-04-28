@@ -127,7 +127,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Password!',
+                        message: 'Please input your password',
                     },
                     ]}
                 >
@@ -146,9 +146,9 @@ const Signup = () => {
             
                 <Form.Item style= {{color:'#fff'}}>
                     <Button type="primary" htmlType="submit" className="login-form-button" >
-                    Sign up!
+                    Sign Up
                     </Button>
-                    Or <Link to="/Login">login!</Link> 
+                    or <Link to="/Login">Login</Link> 
                 </Form.Item>
                 </Form>
             </div>

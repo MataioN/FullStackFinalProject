@@ -6,7 +6,7 @@ const Home = () => {
 
   return (
     <div className="main_div">
-      <h1>Full Stack Music</h1>
+      <h1>Harmonize</h1>
     </div>
   );
 };

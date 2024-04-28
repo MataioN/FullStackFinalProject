@@ -116,9 +116,9 @@ const Login = () => {
             
                 <Form.Item style= {{color:'#fff'}}>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                    Log in
+                    Log In
                     </Button>
-                    Or <Link to="/Signup">register now!</Link> 
+                    or <Link to="/Signup">sign up now!</Link> 
                 </Form.Item>
                 </Form>
             </div>
