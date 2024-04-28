@@ -4,6 +4,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+const [form] = Form.useForm();
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -14,40 +15,43 @@ const Signup = () => {
     e.preventDefault();
     console.log("Signup email:", email, "password:", password);
   };
-
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
   const baseUrl = "http://localhost:3001/"
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
 
-    /*axios({
-        method: 'post',
-        url: 'http://localhost:3001/signup',
-        headers: {'Content-Type': 'application/json'}, 
-        data: {
-          name: name, // This is the body part
-          username: username,
-          email: email, 
-          plain_password: password
-        }, 
-      }).then((response) => {
-        // Handle successful response
-        console.log('Signup successful:', response.data);
-        })
-        .catch((error) => {
-        // Handle error
-        console.error('Error signing up:', error);
-        });
-      */
     axios.post(`http://localhost:3001/signup`, values)
         .then((response) => {
         // Handle successful response
         console.log('Signup successful:', response.data);
-        })
+        res = response.data;
+        }) 
         .catch((error) => {
         // Handle error
         console.error('Error signing up:', error);
+        if (error.response && error.response.data) {
+          // Check for specific error messages from the server
+          const err = error.response.data['error'];
+          form.resetFields();
+          form.setFields({
+            '__global__' :{
+              errors: [{ message: err }]}
+          });
+        } else {
+          // Generic error message
+          form.setFields({
+            '__global__': {
+              errors: [{ message: 'An error occurred during signup. Please try again later.' }],
+            },
+          });
+        }
+
         }); 
   }; 
+
+  
 
   return (
     /** 
@@ -84,6 +88,7 @@ const Signup = () => {
                     remember: true,
                 }}
                 onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
                 >
                 
                 <Form.Item

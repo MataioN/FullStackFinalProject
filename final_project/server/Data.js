@@ -11,7 +11,10 @@ app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
 //const PORT = process.env.PORT || 5000;
 
 // allow CORS everywhere
-app.use(cors());
+//app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173' // Replace with your client-side domain
+}));
 
 // use SQLite database
 const sqlite3 = require('sqlite3').verbose();
@@ -77,56 +80,39 @@ db.serialize(() => {
 
 app.post('/signup', async (req, res) => {
     // retrieve all the information we need from the query parameters
+      try {
+      const {Name, Username, Email, Password} = req.body;
 
-    console.log(req.body);
-
-    const {Name, Username, Email, Password} = req.body;
-
-    const sq = "SELECT COUNT(*) AS count FROM Users WHERE Username = ?";
-    db.get(sq, Username, (err, row) => {
-      if (err) {
-          // Handle error
-          console.error('Error executing query:', err);
-          return;
-      }
-  
-      // Access the count from the result row
-      const count = row.count;
-      if (count > 0) {
-        res.status(400).json({ username: 0 });
-        return;
-      } else {
-        res.status(200).json({ username: 1 });
-      }
-  
-      // Log the count value
-      console.log('Count:', count);
+      // Check if username exists
+      const usernameCount = await new Promise((resolve, reject) => {
+        const sq = "SELECT COUNT(*) AS count FROM Users WHERE Username = ?";
+        db.get(sq, Username, (err, row) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(row.count);
+            }
+        });
     });
 
-    const sq2 = "SELECT COUNT(*) AS count FROM Users WHERE Email = ?";
-    db.get(sq2, Email, (err, row) => {
-      if (err) {
-          // Handle error
-          console.error('Error executing query:', err);
-          return;
-      }
-  
-      // Access the count from the result row
-      const count = row.count;
-      if (count > 0) {
-        res.status(400).json({ email: 0 });
-        return ;
-      } else {
-        res.status(200).json({ email: 1 });
-      }
-  
-      // Log the count value
-      console.log('Count:', count);
+    // Check if email exists
+    const emailCount = await new Promise((resolve, reject) => {
+        const sq2 = "SELECT COUNT(*) AS count FROM Users WHERE Email = ?";
+        db.get(sq2, Email, (err, row) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve(row.count);
+            }
+        });
     });
+    if (usernameCount > 0 || emailCount > 0) {
+      return res.status(400).json({ error: 'Username or Email already exists' });
+    }  
 
     if (!Password || typeof Password !== "string") {
-      throw Error("Password is required");
-  }
+        throw Error("Password is required");
+    }
 
     // converting the plain password to something that looks random. This is called encryption
     const salt = await bcrypt.genSalt(10);
@@ -136,15 +122,25 @@ app.post('/signup', async (req, res) => {
 
     // insert the user into the database. We are are storing the encrypted password, not the plain password
     const stmt = db.prepare(`INSERT INTO Users (Name, Username, Email, Password) VALUES (?, ?, ?, ?)`);
-    stmt.run(Name, Username, Email, encrypted_password, (err) => {
-        if (err) {
-          return res.status(500).json({ error: err.message });
-        }
-        res.json({ success: 'User created.'});}
-    );
-    stmt.finalize();
+    await new Promise((resolve, reject) => {
+      stmt.run(Name, Username, Email, encrypted_password, (err) => {
+          if (err) {
+              reject(err);
+          } else {
+              resolve();
+          }
+          stmt.finalize();
+      });
+    });
+    res.json({ success: 'User created.' });
 
-    const sq3 = "SELECT Users.Id FROM Users WHERE Id = ?";
+    } catch (error) {
+    // Handle errors
+    console.error('Error signing up:', error);
+    res.status(500).json({ error: 'An error occurred during signup.' });
+    }
+
+    /*const sq3 = "SELECT Users.Id FROM Users WHERE Id = ?";
     db.get(sq3, Email, (err, row) => {
       if (err) {
           // Handle error
@@ -153,7 +149,7 @@ app.post('/signup', async (req, res) => {
       }
       const Id = row.Id;
       return res.json({id: Id});
-      });
+      }); */
 });
 
 async function generateRefreshToken(user) {
