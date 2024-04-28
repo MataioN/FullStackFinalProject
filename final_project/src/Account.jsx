@@ -2,7 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Link, Route, Routes } from 'react-router-dom';
 
 import Login from './Login';
-import Signup from './Signup';
+import Signup from './SignUp';
 
 function Account() {
   return (

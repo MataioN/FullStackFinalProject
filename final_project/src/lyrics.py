@@ -9,13 +9,18 @@ import re
 import time
 
 from flask import Flask, request, jsonify
-app = Flask(__name__)
+from flask_cors import CORS
 
+app = Flask(__name__)
+CORS(app)
 
 GENIUS_API_TOKEN= 'DtP-ys_dzjNc76k_1tlslraP6whcgQLIYO_rk1rZLrPacAI8fKKTpNfrICXQmuzw'
 genius = lyricsgenius.Genius(GENIUS_API_TOKEN)
 
+
 os.makedirs("lyrics", exist_ok=True)
+
+@app.route('/lyrics', methods=['POST'])
 def lyrics(artist_name, number_of_songs):
     all_lyrics = []
     artist = genius.search_artist(artist_name, max_songs=number_of_songs)
@@ -46,6 +51,8 @@ def lyrics(artist_name, number_of_songs):
     with open(file_name, 'w', encoding='utf-8') as f:
         f.write("\n\n---\n\n".join(all_lyrics))
 
+
+@app.route('/song_lyrics', methods=['POST'])
 def song_lyrics(song_title, artist_name):
     song = genius.search_song(song_title, artist_name)
     lyrics = song.lyrics
@@ -63,12 +70,16 @@ def song_lyrics(song_title, artist_name):
         # of author)
     lyrics_text2 = re.sub(r".*Get tickets.*as low as.*(\r?\n|\r)?", "", lyrics_text, flags=re.IGNORECASE)
         # Remove text with "Embed"
-    lyrics_text3 = re.sub(r"\d+(\.\d+)?[KM]?Embed", "", lyrics_text2, flags=re.IGNORECASE)
+    lyrics_text3 = re.sub(r"\d+(\.\d+)?[K   M]?Embed", "", lyrics_text2, flags=re.IGNORECASE)
     file_name = os.path.join("lyrics", song_title.lower())
     with open(file_name, 'w', encoding='utf-8') as f:
         f.write(lyrics_text3)
-    
+    return jsonify({
+        'status': 'success',
+        'song': song_title,
+        'lyrics': lyrics_text3
+    })
+
+
 if __name__ == '__main__':
     app.run(debug=True)
-
-
