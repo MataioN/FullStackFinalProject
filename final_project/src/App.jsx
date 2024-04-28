@@ -36,7 +36,7 @@ function App() {
   };
 // PUT LOGO IN OURLOGO SECTION
   return (
-    <div class = "background">
+    <div className = "background">
         <span className = "animation"></span>
    <span className = "animation"></span>
    <span className = "animation"></span>

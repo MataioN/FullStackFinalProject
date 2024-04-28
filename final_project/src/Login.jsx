@@ -2,8 +2,9 @@ import React, { useState } from "react";
 //import { useHistory } from "react-router'dom";
 import './Login.css'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message} from 'antd';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 const Login = () => {
     /**const [email, setEmail] = useState("");
@@ -39,22 +40,25 @@ const Login = () => {
         </div>
     ); **/
 
-
+    const [form] = Form.useForm();
     const baseUrl = "http://localhost:3001/"
     const onFinish = (values) => {
         
         console.log('Received values of form: ', values);
-        const [username, password] = values;
 
-        axios.post(baseUrl+ "login", username, password)
+        axios.post(baseUrl+ "login", values)
             .then((response) => {
             // Handle successful response
             console.log('Login successful:', response.data);
+
             })
             .catch((error) => {
             // Handle error
             console.error('Error logging in:', error);
+            message.error('Incorrect username or password');
+            resetFields();
             });
+
         
         
       };
@@ -102,7 +106,7 @@ const Login = () => {
                 </Form.Item>
                 <Form.Item>
                     <Form.Item name="remember" valuePropName="checked" noStyle>
-                    <Checkbox>Remember me</Checkbox>
+                    <Checkbox style= {{color:'#fff'}}>Remember me</Checkbox>
                     </Form.Item>
             
                     <a className="login-form-forgot" href="">
@@ -110,11 +114,11 @@ const Login = () => {
                     </a>
                 </Form.Item>
             
-                <Form.Item>
+                <Form.Item style= {{color:'#fff'}}>
                     <Button type="primary" htmlType="submit" className="login-form-button">
                     Log in
                     </Button>
-                    Or <a href="">register now!</a>
+                    Or <Link to="/Signup">register now!</Link> 
                 </Form.Item>
                 </Form>
             </div>

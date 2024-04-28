@@ -4,6 +4,10 @@ const bcrypt = require('bcrypt');
 const app = express();
 var jwt = require('jsonwebtoken');
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.json()); // Parse JSON bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
+
 //const PORT = process.env.PORT || 5000;
 
 // allow CORS everywhere
@@ -26,9 +30,8 @@ db.serialize(() => {
     CREATE TABLE IF NOT EXISTS Users (
       Id INTEGER PRIMARY KEY AUTOINCREMENT,
       Name VARCHAR(50),
-      Username TEXT NOT NULL ,
+      Username TEXT UNIQUE NOT NULL ,
       Password TEXT NOT NULL, 
-      Secret TEXT NOT NULL,
       Token  TEXT,
       Spotify_id TEXT,
       Session INT, 
@@ -74,25 +77,83 @@ db.serialize(() => {
 
 app.post('/signup', async (req, res) => {
     // retrieve all the information we need from the query parameters
-    const name = req.query.name;
-    const username = req.query.username;
-    const email = req.query.email;
-    const plain_password = req.query.password;
+
+    console.log(req.body);
+
+    const {Name, Username, Email, Password} = req.body;
+
+    const sq = "SELECT COUNT(*) AS count FROM Users WHERE Username = ?";
+    db.get(sq, Username, (err, row) => {
+      if (err) {
+          // Handle error
+          console.error('Error executing query:', err);
+          return;
+      }
+  
+      // Access the count from the result row
+      const count = row.count;
+      if (count > 0) {
+        res.status(400).json({ username: 0 });
+        return;
+      } else {
+        res.status(200).json({ username: 1 });
+      }
+  
+      // Log the count value
+      console.log('Count:', count);
+    });
+
+    const sq2 = "SELECT COUNT(*) AS count FROM Users WHERE Email = ?";
+    db.get(sq2, Email, (err, row) => {
+      if (err) {
+          // Handle error
+          console.error('Error executing query:', err);
+          return;
+      }
+  
+      // Access the count from the result row
+      const count = row.count;
+      if (count > 0) {
+        res.status(400).json({ email: 0 });
+        return ;
+      } else {
+        res.status(200).json({ email: 1 });
+      }
+  
+      // Log the count value
+      console.log('Count:', count);
+    });
+
+    if (!Password || typeof Password !== "string") {
+      throw Error("Password is required");
+  }
 
     // converting the plain password to something that looks random. This is called encryption
-    const salt = await bcrypt.genSalt(10)
-    const encrypted_password = await bcrypt.hash(plain_password, salt)
+    const salt = await bcrypt.genSalt(10);
+    console.log(Password);
+    console.log(salt);
+    const encrypted_password = await bcrypt.hash(Password, salt);
 
     // insert the user into the database. We are are storing the encrypted password, not the plain password
     const stmt = db.prepare(`INSERT INTO Users (Name, Username, Email, Password) VALUES (?, ?, ?, ?)`);
-    stmt.run(name, username, email, encrypted_password, (err) => {
+    stmt.run(Name, Username, Email, encrypted_password, (err) => {
         if (err) {
           return res.status(500).json({ error: err.message });
         }
-        return res.json({ success: 'User created.' });}
+        res.json({ success: 'User created.'});}
     );
     stmt.finalize();
-    
+
+    const sq3 = "SELECT Users.Id FROM Users WHERE Id = ?";
+    db.get(sq3, Email, (err, row) => {
+      if (err) {
+          // Handle error
+          console.error('Error executing query:', err);
+          return;
+      }
+      const Id = row.Id;
+      return res.json({id: Id});
+      });
 });
 
 async function generateRefreshToken(user) {
@@ -104,20 +165,19 @@ async function generateRefreshToken(user) {
 
 app.post('./login',(req, res) => {
     // retrieve information from the query parameters
-    const username = req.query.username;
-    const plain_password = req.query.password;
+    const {Username, Password} = req.body;
     const sql = 'SELECT * FROM users WHERE Username = ?';
   
-    db.get(sql, [username], async (err, row) => {
-      encrypted_password = row.password
+    db.get(sql, [Username], async (err, row) => {
+      encrypted_password = row.Password
   
-      password_res = await bcrypt.compare(plain_password, encrypted_password)
+      password_res = await bcrypt.compare(Password, encrypted_password)
   
       if (password_res) {
           // if the password was correct, generate a JWT token and send it back to the user
           var token = jwt.sign({ id: row.id }, 'super_secret_key', { expiresIn: '1h' });
   
-          return res.status(200).json({ message: "success", token: token })
+          return res.status(200).json({ message: "success", token: token, id: row.id})
       } else {
           return res.status(401).json({ error: 'Incorrect username or password.' });
       }
@@ -139,7 +199,7 @@ app.post('./login',(req, res) => {
     }
   
     // retrieve the user's data using the token
-    const sql = 'SELECT users.id, users.name, users.email, users.secret FROM users WHERE id = ?';
+    const sql = 'SELECT Users.Id, Users.Name, Users.Email FROM Users WHERE Id = ?';
     db.get(sql, [decoded.id], (err, row) => {
       if (err) {
         return res.status(500).json({ error: err.message });
