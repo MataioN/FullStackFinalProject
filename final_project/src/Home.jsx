@@ -5,7 +5,7 @@ const Home = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   return (
-    <div>
+    <div class="main_div">
       <h1>Full Stack Music App</h1>
     </div>
   );

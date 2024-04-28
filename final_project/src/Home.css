@@ -1,0 +1,12 @@
+.main_div {
+    background-color: rgba(25, 6, 44, 0.251);
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    align-items: center;
+    height: 50vh;
+    margin-top: 150px;
+}
+

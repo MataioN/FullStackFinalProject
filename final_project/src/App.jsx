@@ -5,7 +5,11 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
 import './App.css';
 import Karaoke from './Karaoke';
 import Home from './Home';
-import Account from './Account'
+import Account from './Account';
+import './background.css';
+import Login from './Login';
+import Signup from './Signup';
+import Navbar from './Navbar';
 
 
 function App() {
@@ -32,6 +36,39 @@ function App() {
   };
 // PUT LOGO IN OURLOGO SECTION
   return (
+    <div class = "background">
+        <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+   <span className = "animation"></span>
+    
+    {/*
     <Router>
     <div class="ourLogo">  
       LOGO HERE 
@@ -48,10 +85,21 @@ function App() {
       {renderPage()}
 
       <Routes>
-        <Route path="/account" element={<Account />} /> {/* Route for the login/sign up page */}
+        <Route path="/account" element={<Account />} />  Route for the login/sign up page 
       </Routes>
     </Router>
-
+    
+    */}
+    <Navbar/>
+      <div>
+    <Routes>        
+      <Route path="/Home"  element={<Home/>} />
+      <Route path="/Karaoke"  element={<Karaoke/>} />
+      <Route path="/Signup"  element={<Signup />}/>
+      <Route path="/Login"  element={<Login/>}/>
+    </Routes>
+    </div>
+    </div>
   );
 }
 

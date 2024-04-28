@@ -10,11 +10,17 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
+=======
+    "@ant-design/icons": "^5.3.6",
+>>>>>>> 1b8ccdd937143c01f955d753acba95d1abcc82a1
     "antd": "^5.16.4",
     "axios": "^1.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-router-dom": "^6.23.0"
+    "react-router-dom": "^6.23.0",
+    "sass": "^1.75.0",
+    "styled-components": "^6.1.8"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

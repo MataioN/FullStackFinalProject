@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt');
 const app = express();
 var jwt = require('jsonwebtoken');
 
+//const PORT = process.env.PORT || 5000;
+
 // allow CORS everywhere
 app.use(cors());
 
@@ -22,7 +24,7 @@ const db = new sqlite3.Database('myDatabaseFile.db', (err) => {
 db.serialize(() => {
     db.run(`
     CREATE TABLE IF NOT EXISTS Users (
-      Id INT UNIQUE PRIMARY KEY AUTO_INCREMENT,
+      Id INTEGER PRIMARY KEY AUTOINCREMENT,
       Name VARCHAR(50),
       Username TEXT NOT NULL ,
       Password TEXT NOT NULL, 
@@ -34,7 +36,7 @@ db.serialize(() => {
       FOREIGN KEY (Session) References Sessions(Id)
     );
     CREATE TABLE IF NOT EXISTS Sessions (
-        Id INT UNIQUE PRIMARY KEY AUOT_INCREMENT,
+        Id INTEGER PRIMARY KEY AUTOINCREMENT,
         State INT NOT NULL,
         Num_users INT,
         Playback_song TEXT,
@@ -42,13 +44,13 @@ db.serialize(() => {
         Karaoke_state TEXT NOT NULL  
     );
     CREATE TABLE IF NOT EXISTS Follows (
-        Following_id INT NOT NULL
-        Followed_id INT NOT NULL
+        Following_id INT NOT NULL,
+        Followed_id INT NOT NULL,
         FOREIGN KEY (Following_id) References Users(Id),
         FOREIGN KEY (Followed_id) References Users(Id)
     );
     CREATE TABLE IF NOT EXISTS Music_posts (
-        Id INT UNIQUE PRIMARY KEY AUTO_INCREMENT,
+        Id INTEGER PRIMARY KEY AUTOINCREMENT,
         Name TEXT NOT NULL,
         Body TEXT NOT NULL,
         User INT NOT NULL,
@@ -73,18 +75,17 @@ db.serialize(() => {
 app.post('/signup', async (req, res) => {
     // retrieve all the information we need from the query parameters
     const name = req.query.name;
-    const username = req.query.name;
+    const username = req.query.username;
     const email = req.query.email;
     const plain_password = req.query.password;
-    const secret = req.query.secret;
 
     // converting the plain password to something that looks random. This is called encryption
     const salt = await bcrypt.genSalt(10)
     const encrypted_password = await bcrypt.hash(plain_password, salt)
 
     // insert the user into the database. We are are storing the encrypted password, not the plain password
-    const stmt = db.prepare(`INSERT INTO Users (Name, Username, Email, Password, Secret) VALUES (?, ?, ?, ?,?)`);
-    stmt.run(name, username, email, encrypted_password, secret, (err) => {
+    const stmt = db.prepare(`INSERT INTO Users (Name, Username, Email, Password) VALUES (?, ?, ?, ?)`);
+    stmt.run(name, username, email, encrypted_password, (err) => {
         if (err) {
           return res.status(500).json({ error: err.message });
         }
@@ -103,11 +104,11 @@ async function generateRefreshToken(user) {
 
 app.post('./login',(req, res) => {
     // retrieve information from the query parameters
-    const email = req.query.email;
+    const username = req.query.username;
     const plain_password = req.query.password;
-    const sql = 'SELECT * FROM users WHERE email = ?';
+    const sql = 'SELECT * FROM users WHERE Username = ?';
   
-    db.get(sql, [email], async (err, row) => {
+    db.get(sql, [username], async (err, row) => {
       encrypted_password = row.password
   
       password_res = await bcrypt.compare(plain_password, encrypted_password)
@@ -118,8 +119,38 @@ app.post('./login',(req, res) => {
   
           return res.status(200).json({ message: "success", token: token })
       } else {
-          return res.status(401).json({ error: 'Incorrect email or password.' });
+          return res.status(401).json({ error: 'Incorrect username or password.' });
       }
   
     });
   }); 
+
+
+  app.get('/user', (req, res) => {
+    // get the token
+    const token = req.headers.token;
+  
+    // verify the token. This is where we check if the user is "logged in"
+    let decoded;
+    try {
+      decoded = jwt.verify(token, "super_secret_key")
+    } catch (error) {
+      res.json({ error: "invalid token, please login again"})
+    }
+  
+    // retrieve the user's data using the token
+    const sql = 'SELECT users.id, users.name, users.email, users.secret FROM users WHERE id = ?';
+    db.get(sql, [decoded.id], (err, row) => {
+      if (err) {
+        return res.status(500).json({ error: err.message });
+      }
+      if (!row) {
+        return res.status(401).json({ error: 'Invalid token.' });
+      }
+      return res.json(row);
+    });
+  });
+
+  app.listen(3001, () => {
+    console.log(`Server running on port ${3001}`);
+  });

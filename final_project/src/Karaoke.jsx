@@ -4,8 +4,13 @@ import axios from 'axios';
 
 function Karaoke() {
     const CLIENT_ID = 'af3f950385974164af122690fca30b26';
+<<<<<<< HEAD
     const SCOPES = ['user-read-recently-played', 'user-top-read user-library-modify', 'user-library-read', 'playlist-read-private', 'playlist-read-collaborative', 'user-read-private'];
     const REDIRECT_URI = "http://localhost:5173/";
+=======
+    const SCOPES = ['user-read-recently-played', 'user-top-read user-library-modify', 'user-library-read', 'playlist-read-private',  'playlist-read-collaborative', 'user-read-private' ];
+    const REDIRECT_URI = "http://localhost:5173/Karaoke";
+>>>>>>> 1b8ccdd937143c01f955d753acba95d1abcc82a1
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
     const RESPONSE_TYPE = "token";
     const [token, setToken] = useState("");
@@ -74,14 +79,22 @@ function Karaoke() {
     };
 
     return (
+<<<<<<< HEAD
         <>
             <div>
                 <h1>Karaoke</h1>
             </div>
             {!token ? (
+=======
+        <div class= "main_div">
+            <div >
+            <h1>Karaoke</h1>
+            </div>
+        {!token ? (
+>>>>>>> 1b8ccdd937143c01f955d753acba95d1abcc82a1
                 <button onClick={handleLogin}>Login to Spotify</button>
             ) : (
-                <div>
+                <div >
                     <p>Successfully authenticated with Spotify!</p>
                     <button onClick={getTopTracks}>Get your top songs!</button>
                     <button onClick={handleLogout}>Logout</button>
@@ -92,6 +105,7 @@ function Karaoke() {
                     ) : null}
                 </div>
             )}
+<<<<<<< HEAD
             
             <div className="oval">
                 <input
@@ -115,6 +129,17 @@ function Karaoke() {
                 />
             </div>
         </>
+=======
+        <div class= "input_ovals">
+        <div class="oval">
+            <input type="text" class="oval-input" placeholder="Search for your favorite songs!" />
+        </div>
+        <div class="upperOval">
+            <input type="text" class="upperOval-input" placeholder="Join a Party" />
+        </div>
+        </div>
+        </div>
+>>>>>>> 1b8ccdd937143c01f955d753acba95d1abcc82a1
     );
 }
 

@@ -37,9 +37,7 @@
   }
 
   .upperOval-input {
-    position: fixed;
-    top: 20px;
-    right: 20px;
+    
   }
   
   .tabs a {
@@ -59,4 +57,9 @@
     width: 100%;
     padding: 20px;
     box-sizing: border-box;
+  }
+  .input_ovals {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
   }
