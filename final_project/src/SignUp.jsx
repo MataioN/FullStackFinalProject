@@ -41,7 +41,7 @@ const Signup = () => {
     axios.post(`http://localhost:3001/signup`, values)
         .then((response) => {
         // Handle successful response
-        console.log('Signup successful:', response.data);
+        console.log('Sign up successful:', response.data);
         })
         .catch((error) => {
         // Handle error
@@ -91,7 +91,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your name!',
+                        message: 'Please input your name',
                     },
                     ]}
                     >
@@ -103,7 +103,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your email!',
+                        message: 'Please input your email',
                     },
                     ]}
                 >
@@ -116,7 +116,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Username!',
+                        message: 'Please input your username',
                     },
                     ]}
                 >

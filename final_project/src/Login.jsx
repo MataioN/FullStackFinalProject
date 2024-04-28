@@ -83,7 +83,7 @@ const Login = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Username!',
+                        message: 'Please input your username',
                     },
                     ]}
                 >
@@ -94,7 +94,7 @@ const Login = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Password!',
+                        message: 'Please input your password',
                     },
                     ]}
                 >
