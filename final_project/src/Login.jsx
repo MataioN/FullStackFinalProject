@@ -61,7 +61,8 @@ const Login = () => {
 
 
       return (
-        <div style = {{display: 'flex', justifyContent: 'center', alignItems:'center' }}>
+        <div className= "main_div" >
+        <div style = {{display: 'flex', justifyContent: 'center', alignItems:'center', animation: 'none' }}>
             <div style={{width:400}}>
                 <h1 style= {{textAlign:'center'}}>Login</h1>
                 <Form
@@ -117,6 +118,7 @@ const Login = () => {
                 </Form.Item>
                 </Form>
             </div>
+        </div>
         </div>
         
       );

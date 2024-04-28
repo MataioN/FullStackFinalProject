@@ -53,9 +53,10 @@ const Signup = () => {
     </div>
     */
 
-    <div style = {{display: 'flex', justifyContent: 'center', alignItems:'center' }}>
+   <div className='main_div'>
+   <div style = {{display: 'flex', justifyContent: 'center', alignItems:'center', animation: 'none' }}>
             <div style={{width:400}}>
-                <h1 style= {{textAlign:'center'}}>Login</h1>
+                <h1 style= {{textAlign:'center'}}>Sign Up</h1>
                 <Form
                 name="normal_signup"
                 className="signup-form"
@@ -130,6 +131,7 @@ const Signup = () => {
                 </Form.Item>
                 </Form>
             </div>
+        </div>
         </div>
   );
 };

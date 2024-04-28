@@ -6,7 +6,7 @@ import axios from 'axios';
 function Karaoke() {
     const CLIENT_ID = 'af3f950385974164af122690fca30b26';
     const SCOPES = ['user-read-recently-played', 'user-top-read user-library-modify', 'user-library-read', 'playlist-read-private',  'playlist-read-collaborative', 'user-read-private' ];
-    const REDIRECT_URI = "http://localhost:5173/";
+    const REDIRECT_URI = "http://localhost:5173/Karaoke";
     const AUTH_ENDPOINT = "https://accounts.spotify.com/authorize";
     const RESPONSE_TYPE = "token" ;
     const [token, setToken] = useState("");
@@ -69,7 +69,7 @@ function Karaoke() {
         <div class= "main_div">
             <div >
             <h1>Karaoke</h1>
-        </div>
+            </div>
         {!token ? (
                 <button onClick={handleLogin}>Login to Spotify</button>
             ) : (
@@ -90,11 +90,13 @@ function Karaoke() {
                 
                 </div>
             )}
+        <div class= "input_ovals">
         <div class="oval">
             <input type="text" class="oval-input" placeholder="Search for your favorite songs!" />
         </div>
         <div class="upperOval">
             <input type="text" class="upperOval-input" placeholder="Join a Party" />
+        </div>
         </div>
         </div>
     );
