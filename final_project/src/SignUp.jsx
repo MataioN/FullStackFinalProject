@@ -54,8 +54,8 @@ const Signup = () => {
     */
 
    <div className='main_div'>
-   <div style = {{display: 'flex', justifyContent: 'center', alignItems:'center', animation: 'none' }}>
-            <div style={{width:400}}>
+   <div >
+            <div >
                 <h1 style= {{textAlign:'center'}}>Sign Up</h1>
                 <Form
                 name="normal_signup"
@@ -74,7 +74,9 @@ const Signup = () => {
                         message: 'Please input your name!',
                     },
                     ]}
-                ></Form.Item>
+                    >
+                    <Input placeholder="Name" />
+                </Form.Item>
 
 <Form.Item
                     name="Email"
@@ -84,7 +86,9 @@ const Signup = () => {
                         message: 'Please input your email!',
                     },
                     ]}
-                ></Form.Item>
+                >
+                    <Input placeholder="Email" />
+                </Form.Item>
 
 
                 <Form.Item
@@ -118,16 +122,12 @@ const Signup = () => {
                     <Checkbox>Remember me</Checkbox>
                     </Form.Item>
             
-                    <a className="login-form-forgot" href="">
-                    Forgot password
-                    </a>
                 </Form.Item>
             
                 <Form.Item>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                    Log in
+                    Sign up!
                     </Button>
-                    Or <a href="">register now!</a>
                 </Form.Item>
                 </Form>
             </div>

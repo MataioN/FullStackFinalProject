@@ -62,8 +62,8 @@ const Login = () => {
 
       return (
         <div className= "main_div" >
-        <div style = {{display: 'flex', justifyContent: 'center', alignItems:'center', animation: 'none' }}>
-            <div style={{width:400}}>
+        <div >
+            <div >
                 <h1 style= {{textAlign:'center'}}>Login</h1>
                 <Form
                 name="normal_login"
