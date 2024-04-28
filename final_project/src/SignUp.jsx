@@ -26,8 +26,7 @@ const Signup = () => {
         .then((response) => {
         // Handle successful response
         console.log('Signup successful:', response.data);
-        res = response.data;
-        }) 
+        })
         .catch((error) => {
         // Handle error
         console.error('Error signing up:', error);
@@ -96,7 +95,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your name!',
+                        message: 'Please input your name',
                     },
                     ]}
                     >
@@ -108,7 +107,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your email!',
+                        message: 'Please input your email',
                     },
                     ]}
                 >
@@ -121,7 +120,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Username!',
+                        message: 'Please input your username',
                     },
                     ]}
                 >
@@ -132,7 +131,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Password!',
+                        message: 'Please input your password',
                     },
                     ]}
                 >
@@ -151,9 +150,9 @@ const Signup = () => {
             
                 <Form.Item style= {{color:'#fff'}}>
                     <Button type="primary" htmlType="submit" className="login-form-button" >
-                    Sign up!
+                    Sign Up
                     </Button>
-                    Or <Link to="/Login">login!</Link> 
+                    or <Link to="/Login">Login</Link> 
                 </Form.Item>
                 </Form>
             </div>
