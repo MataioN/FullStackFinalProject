@@ -6,7 +6,7 @@
     background-color:rgba(25, 6, 44, 0.251); 
     position: sticky;
     top: 0px;
-    padding: 10px;
+    padding: 15px;
     z-index: 100000;
     
 }
@@ -18,9 +18,9 @@
 }
 
 .logo {
-    max-width: 65px; /* set maximum width to 100% of its container */
+    max-width: 40px; /* set maximum width to 100% of its container */
     height: auto; /* maintain aspect ratio */
     position: absolute;
-    top: 0px; 
+    top: -10px; 
     left: 10px; 
 }

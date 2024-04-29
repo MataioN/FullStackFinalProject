@@ -1,5 +1,5 @@
 module.exports = app => {
-    const users = require("../app/controllers/user.controller.js");
+    const users = require("../controllers/user.controller.js");
   
     var router = require("express").Router();
   
@@ -9,6 +9,8 @@ module.exports = app => {
 
     // Login
     router.post("/login", users.login);
+
+    router.get("/profile", users.profile);
   
     app.use('/api/users', router);
   };

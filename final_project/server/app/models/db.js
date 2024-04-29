@@ -1,11 +1,11 @@
-import { createConnection } from "mysql";
-import { HOST, USER, PASSWORD, DB } from "../app/config/db.config.js";
+const mysql = require("mysql2");
+const dbConfig = require("../config/db.config.js");
 
-const connection = createConnection({
-    host: HOST,
-    user: USER,
-    password: PASSWORD,
-    database: DB
+const connection = mysql.createConnection({
+    host: dbConfig.HOST,
+    user: dbConfig.USER,
+    password: dbConfig.PASSWORD,
+    database: dbConfig.DB
   });
 
 connection.connect(error => {
@@ -13,4 +13,4 @@ connection.connect(error => {
     console.log("Successfully connected to the database.");
   });
 
-export default connection;
+module.exports = connection;

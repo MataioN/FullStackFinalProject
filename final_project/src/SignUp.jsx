@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Signup.css'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
 
@@ -22,30 +22,23 @@ const Signup = () => {
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
 
-    axios.post(`http://localhost:3001/signup`, values)
+    axios.post(`http://localhost:3001/api/users/signup`, values)
         .then((response) => {
         // Handle successful response
-        console.log('Signup successful:', response.data);
+        console.log(response.data);
+        if (response.data.error) {
+          message.error(response.data.error);
+        } else {
+          console.log('Signup successful:', response.data);
+          message.success('Signup successful!');
+          localStorage.setItem('loggedIn', true);
+          localStorage.setItem('SignInToken', response.data.Token);
+      }
         })
         .catch((error) => {
         // Handle error
         console.error('Error signing up:', error);
-        if (error.response && error.response.data) {
-          // Check for specific error messages from the server
-          const err = error.response.data['error'];
-          /*form.resetFields();
-          form.setFields({
-            '__global__' :{
-              errors: [{ message: err }]}
-          });*/
-        } else {
-          // Generic error message
-          /*form.setFields({
-            '__global__': {
-              errors: [{ message: 'An error occurred during signup. Please try again later.' }],
-            },
-          });*/
-        }
+        message.error('Error signing up, please try again');
 
         }); 
   }; 

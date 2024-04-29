@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState , useEffect} from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate  } from "react-router-dom"
 
 
@@ -10,11 +10,20 @@ import './background.css';
 import Login from './Login';
 import Signup from './Signup';
 import Navbar from './Navbar';
+import Profile from './Profile';
 
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [showTabs, setShowTabs] = useState(true); // Control tab visibility
+
+  useEffect(()=>{
+    var token = localStorage.getItem('Token');
+    if (!token) {
+      localStorage.setItem('loggedIn', false);
+    }
+
+  });
 
   
   const handlePageChange = (page) => {
@@ -94,6 +103,7 @@ function App() {
       <div>
     <Routes>        
       <Route path="/Home"  element={<Home/>} />
+      <Route path="/Profile"  element={<Profile/>} />
       <Route path="/Karaoke"  element={<Karaoke/>} />
       <Route path="/Signup"  element={<Signup />}/>
       <Route path="/Login"  element={<Login/>}/>

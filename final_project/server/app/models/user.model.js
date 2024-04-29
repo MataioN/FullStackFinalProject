@@ -1,4 +1,4 @@
-import { query } from "./db.js";
+const sql = require("./db.js");
 
 const User = function(user) {
     this.Name = user.Name;
@@ -6,21 +6,21 @@ const User = function(user) {
     this.Email = user.Email;
     this.Password = user.Password;
   };
-
+  
 User.create = (newUser, result) => {
-    query("INSERT INTO Users SET ?", newUser, (err, res) => {
+    sql.query("INSERT INTO Users (Name, Username, Email, Password) VALUES (?, ?, ?, ?)", [newUser.Name, newUser.Username, newUser.Email, newUser.Password], (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
         return;
       }
   
-      console.log("created tutorial: ", { id: res.insertId, ...newUser });
+      console.log("created user: ", { id: res.insertId, ...newUser });
       result(null, { id: res.insertId, ...newUser });
     });
   };
 User.findById = (id, result) => {
-    query(`SELECT * FROM Users WHERE Id = ${id}`, (err, res) => {
+    sql.query(`SELECT * FROM Users WHERE Id = ${id}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
         result(err, null);
@@ -39,9 +39,12 @@ User.findById = (id, result) => {
   };
 
   User.findByUsername = (username, result) => {
-    query(`SELECT * FROM Users WHERE Username = ${username}`, (err, res) => {
+    console.log('finding username');
+    console.log(username);
+    sql.query(`SELECT * FROM Users WHERE Username = ?`, [username],(err, res) => {
       if (err) {
         console.log("error: ", err);
+        console.error(err);
         result(err, null);
         return;
       }
@@ -58,9 +61,10 @@ User.findById = (id, result) => {
   };
 
   User.findByEmail = (email, result) => {
-    query(`SELECT * FROM Users WHERE Email = ${email}`, (err, res) => {
+    sql.query(`SELECT * FROM Users WHERE Email = ${email}`, (err, res) => {
       if (err) {
         console.log("error: ", err);
+        console.error(err);
         result(err, null);
         return;
       }
@@ -75,3 +79,5 @@ User.findById = (id, result) => {
       result({ kind: "not_found" }, null);
     });
   };
+
+  module.exports=User;

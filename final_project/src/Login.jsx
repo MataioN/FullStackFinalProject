@@ -7,41 +7,7 @@ import axios from 'axios';
 import {Link} from 'react-router-dom';
 
 const Login = () => {
-    /**const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    //const history = useHistory(); //initialize useHistory hook
-    
-    const handleLogin = (e) => {
-        e.preventDefault();
-        //login authentication logic 
-        //history.push("/dashboard") //navigate to dashboard route after succesful login 
-    };
-
-    return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <input 
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <input 
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    ); **/
-
-    //const [form] = Form.useForm();
-    const baseUrl = "http://localhost:3001/"
+    const baseUrl = "http://localhost:3001/api/users/"
     const onFinish = (values) => {
         
         console.log('Received values of form: ', values);
@@ -50,12 +16,15 @@ const Login = () => {
             .then((response) => {
             // Handle successful response
             console.log('Login successful:', response.data);
+            message.success('Login successful');
+            localStorage.setItem('loggedIn',true);
 
             })
             .catch((error) => {
             // Handle error
             console.error('Error logging in:', error);
             message.error('Incorrect username or password');
+            localStorage.setItem('loggedIn', false);
             //resetFields();
             });
 
