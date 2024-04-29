@@ -4,7 +4,7 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
-const [form] = Form.useForm();
+
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -33,18 +33,18 @@ const Signup = () => {
         if (error.response && error.response.data) {
           // Check for specific error messages from the server
           const err = error.response.data['error'];
-          form.resetFields();
+          /*form.resetFields();
           form.setFields({
             '__global__' :{
               errors: [{ message: err }]}
-          });
+          });*/
         } else {
           // Generic error message
-          form.setFields({
+          /*form.setFields({
             '__global__': {
               errors: [{ message: 'An error occurred during signup. Please try again later.' }],
             },
-          });
+          });*/
         }
 
         }); 

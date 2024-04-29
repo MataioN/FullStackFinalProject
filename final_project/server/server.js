@@ -1,13 +1,18 @@
 const express = require('express');
 const cors = require('cors');
-const bcrypt = require('bcrypt');
+//const bcrypt = require('bcrypt');
 const app = express();
-var jwt = require('jsonwebtoken');
+//var jwt = require('jsonwebtoken');
 
-const bodyParser = require('body-parser');
+/**const bodyParser = require('body-parser');
 app.use(bodyParser.json()); // Parse JSON bodies
-app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies
+app.use(bodyParser.urlencoded({ extended: true })); // Parse URL-encoded bodies**/
 
+// parse requests of content-type - application/json
+app.use(express.json());
+
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true }));
 //const PORT = process.env.PORT || 5000;
 
 // allow CORS everywhere
@@ -16,8 +21,19 @@ app.use(cors({
   origin: 'http://localhost:5173' // Replace with your client-side domain
 }));
 
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome" });
+});
+
+require("/app/routes/users.routes.js")(app);
+
+app.listen(3001, () => {
+  console.log(`Server running on port ${3001}`);
+});
+
+/*
 // use SQLite database
-const sqlite3 = require('sqlite3').verbose();
+//const sqlite3 = require('sqlite3').verbose();
 
 //create database file:
 const db = new sqlite3.Database('myDatabaseFile.db', (err) => {
@@ -149,7 +165,7 @@ app.post('/signup', async (req, res) => {
       }
       const Id = row.Id;
       return res.json({id: Id});
-      }); */
+      }); 
 });
 
 async function generateRefreshToken(user) {
@@ -162,7 +178,7 @@ async function generateRefreshToken(user) {
 app.post('./login',(req, res) => {
     // retrieve information from the query parameters
     const {Username, Password} = req.body;
-    const sql = 'SELECT * FROM users WHERE Username = ?';
+    const sql = 'SELECT * FROM Users WHERE Username = ?';
   
     db.get(sql, [Username], async (err, row) => {
       encrypted_password = row.Password
@@ -206,7 +222,5 @@ app.post('./login',(req, res) => {
       return res.json(row);
     });
   });
-
-  app.listen(3001, () => {
-    console.log(`Server running on port ${3001}`);
-  });
+  */
+  

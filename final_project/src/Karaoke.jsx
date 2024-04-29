@@ -66,7 +66,7 @@ function Karaoke() {
     };
 
     return (
-        <div class= "main_div">
+        <div className= "main_div">
             <div >
             <h1>Karaoke</h1>
             </div>

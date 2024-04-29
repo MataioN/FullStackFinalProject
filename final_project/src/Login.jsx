@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import {React, useState } from "react";
 //import { useHistory } from "react-router'dom";
 import './Login.css'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
@@ -40,7 +40,7 @@ const Login = () => {
         </div>
     ); **/
 
-    const [form] = Form.useForm();
+    //const [form] = Form.useForm();
     const baseUrl = "http://localhost:3001/"
     const onFinish = (values) => {
         
@@ -56,7 +56,7 @@ const Login = () => {
             // Handle error
             console.error('Error logging in:', error);
             message.error('Incorrect username or password');
-            resetFields();
+            //resetFields();
             });
 
         
