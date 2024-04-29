@@ -20,7 +20,6 @@ genius = lyricsgenius.Genius(GENIUS_API_TOKEN)
 
 os.makedirs("lyrics", exist_ok=True)
 
-@app.route('/lyrics', methods=['POST'])
 def lyrics(artist_name, number_of_songs):
     all_lyrics = []
     artist = genius.search_artist(artist_name, max_songs=number_of_songs)
@@ -52,7 +51,6 @@ def lyrics(artist_name, number_of_songs):
         f.write("\n\n---\n\n".join(all_lyrics))
 
 
-@app.route('/song_lyrics', methods=['POST'])
 def song_lyrics(song_title, artist_name):
     song = genius.search_song(song_title, artist_name)
     lyrics = song.lyrics
@@ -74,12 +72,7 @@ def song_lyrics(song_title, artist_name):
     file_name = os.path.join("lyrics", song_title.lower())
     with open(file_name, 'w', encoding='utf-8') as f:
         f.write(lyrics_text3)
-    return jsonify({
-        'status': 'success',
-        'song': song_title,
-        'lyrics': lyrics_text3
-    })
+    return lyrics_text3
+    
 
 
-if __name__ == '__main__':
-    app.run(debug=True)

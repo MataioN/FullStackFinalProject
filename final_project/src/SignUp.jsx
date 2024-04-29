@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-<<<<<<< HEAD
-import './SignUp.css'
-=======
 import './Signup.css'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
+import {Link} from 'react-router-dom';
 import axios from 'axios';
->>>>>>> 1b8ccdd937143c01f955d753acba95d1abcc82a1
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -21,9 +18,18 @@ const Signup = () => {
   const baseUrl = "http://localhost:3001/"
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
-    const [name, email, username, password] = values;
-    axios.post(baseUrl+ "signup", name, username, email, password)
-        .then((response) => {
+
+    /*axios({
+        method: 'post',
+        url: 'http://localhost:3001/signup',
+        headers: {'Content-Type': 'application/json'}, 
+        data: {
+          name: name, // This is the body part
+          username: username,
+          email: email, 
+          plain_password: password
+        }, 
+      }).then((response) => {
         // Handle successful response
         console.log('Signup successful:', response.data);
         })
@@ -31,7 +37,17 @@ const Signup = () => {
         // Handle error
         console.error('Error signing up:', error);
         });
-  };
+      */
+    axios.post(`http://localhost:3001/signup`, values)
+        .then((response) => {
+        // Handle successful response
+        console.log('Signup successful:', response.data);
+        })
+        .catch((error) => {
+        // Handle error
+        console.error('Error signing up:', error);
+        }); 
+  }; 
 
   return (
     /** 
@@ -123,15 +139,16 @@ const Signup = () => {
                 </Form.Item>
                 <Form.Item>
                     <Form.Item name="remember" valuePropName="checked" noStyle>
-                    <Checkbox>Remember me</Checkbox>
+                    <Checkbox style= {{color:'#fff'}}>Remember me</Checkbox>
                     </Form.Item>
             
                 </Form.Item>
             
-                <Form.Item>
-                    <Button type="primary" htmlType="submit" className="login-form-button">
+                <Form.Item style= {{color:'#fff'}}>
+                    <Button type="primary" htmlType="submit" className="login-form-button" >
                     Sign up!
                     </Button>
+                    Or <Link to="/Login">login!</Link> 
                 </Form.Item>
                 </Form>
             </div>

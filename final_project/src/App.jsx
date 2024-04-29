@@ -10,6 +10,7 @@ import './background.css';
 import Login from './Login';
 import Signup from './Signup';
 import Navbar from './Navbar';
+import LyricsPage from './LyricsPage';
 
 
 function App() {
@@ -97,6 +98,9 @@ function App() {
       <Route path="/Karaoke"  element={<Karaoke/>} />
       <Route path="/Signup"  element={<Signup />}/>
       <Route path="/Login"  element={<Login/>}/>
+      <Route path="/LyricsPage" element={<LyricsPage/>}>
+        
+      </Route>
     </Routes>
     </div>
     </div>
