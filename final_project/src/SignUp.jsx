@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import './Signup.css'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message } from 'antd';
 import {Link} from 'react-router-dom';
 import axios from 'axios';
+
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -14,40 +15,35 @@ const Signup = () => {
     e.preventDefault();
     console.log("Signup email:", email, "password:", password);
   };
-
+  const onFinishFailed = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
   const baseUrl = "http://localhost:3001/"
   const onFinish = (values) => {
     console.log('Received values of form: ', values);
 
-    /*axios({
-        method: 'post',
-        url: 'http://localhost:3001/signup',
-        headers: {'Content-Type': 'application/json'}, 
-        data: {
-          name: name, // This is the body part
-          username: username,
-          email: email, 
-          plain_password: password
-        }, 
-      }).then((response) => {
-        // Handle successful response
-        console.log('Signup successful:', response.data);
-        })
-        .catch((error) => {
-        // Handle error
-        console.error('Error signing up:', error);
-        });
-      */
-    axios.post(`http://localhost:3001/signup`, values)
+    axios.post(`http://localhost:3001/api/users/signup`, values)
         .then((response) => {
         // Handle successful response
-        console.log('Signup successful:', response.data);
+        console.log(response.data);
+        if (response.data.error) {
+          message.error(response.data.error);
+        } else {
+          console.log('Signup successful:', response.data);
+          message.success('Signup successful!');
+          localStorage.setItem('loggedIn', true);
+          localStorage.setItem('SignInToken', response.data.Token);
+      }
         })
         .catch((error) => {
         // Handle error
         console.error('Error signing up:', error);
+        message.error('Error signing up, please try again');
+
         }); 
   }; 
+
+  
 
   return (
     /** 
@@ -84,6 +80,7 @@ const Signup = () => {
                     remember: true,
                 }}
                 onFinish={onFinish}
+                onFinishFailed={onFinishFailed}
                 >
                 
                 <Form.Item
@@ -91,7 +88,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your name!',
+                        message: 'Please input your name',
                     },
                     ]}
                     >
@@ -103,7 +100,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your email!',
+                        message: 'Please input your email',
                     },
                     ]}
                 >
@@ -116,7 +113,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Username!',
+                        message: 'Please input your username',
                     },
                     ]}
                 >
@@ -127,7 +124,7 @@ const Signup = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Password!',
+                        message: 'Please input your password',
                     },
                     ]}
                 >
@@ -146,9 +143,9 @@ const Signup = () => {
             
                 <Form.Item style= {{color:'#fff'}}>
                     <Button type="primary" htmlType="submit" className="login-form-button" >
-                    Sign up!
+                    Sign Up
                     </Button>
-                    Or <Link to="/Login">login!</Link> 
+                    or <Link to="/Login">Login</Link> 
                 </Form.Item>
                 </Form>
             </div>

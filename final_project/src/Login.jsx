@@ -1,60 +1,33 @@
-import React, { useState } from "react";
+import {React, useState } from "react";
 //import { useHistory } from "react-router'dom";
 import './Login.css'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Checkbox, Form, Input } from 'antd';
+import { Button, Checkbox, Form, Input, message} from 'antd';
 import axios from 'axios';
+import {Link} from 'react-router-dom';
 
 const Login = () => {
-    /**const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    //const history = useHistory(); //initialize useHistory hook
-    
-    const handleLogin = (e) => {
-        e.preventDefault();
-        //login authentication logic 
-        //history.push("/dashboard") //navigate to dashboard route after succesful login 
-    };
-
-    return (
-        <div>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
-                <input 
-                    type="email"
-                    placeholder="Enter email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                />
-                <input 
-                    type="password"
-                    placeholder="Enter password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-                <button type="submit">Login</button>
-            </form>
-        </div>
-    ); **/
-
-
-    const baseUrl = "http://localhost:3001/"
+    const baseUrl = "http://localhost:3001/api/users/"
     const onFinish = (values) => {
         
         console.log('Received values of form: ', values);
-        const [username, password] = values;
 
-        axios.post(baseUrl+ "login", username, password)
+        axios.post(baseUrl+ "login", values)
             .then((response) => {
             // Handle successful response
             console.log('Login successful:', response.data);
+            message.success('Login successful');
+            localStorage.setItem('loggedIn',true);
+
             })
             .catch((error) => {
             // Handle error
             console.error('Error logging in:', error);
+            message.error('Incorrect username or password');
+            localStorage.setItem('loggedIn', false);
+            //resetFields();
             });
+
         
         
       };
@@ -79,7 +52,7 @@ const Login = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Username!',
+                        message: 'Please input your username',
                     },
                     ]}
                 >
@@ -90,7 +63,7 @@ const Login = () => {
                     rules={[
                     {
                         required: true,
-                        message: 'Please input your Password!',
+                        message: 'Please input your password',
                     },
                     ]}
                 >
@@ -102,7 +75,7 @@ const Login = () => {
                 </Form.Item>
                 <Form.Item>
                     <Form.Item name="remember" valuePropName="checked" noStyle>
-                    <Checkbox>Remember me</Checkbox>
+                    <Checkbox style= {{color:'#fff'}}>Remember me</Checkbox>
                     </Form.Item>
             
                     <a className="login-form-forgot" href="">
@@ -110,11 +83,11 @@ const Login = () => {
                     </a>
                 </Form.Item>
             
-                <Form.Item>
+                <Form.Item style= {{color:'#fff'}}>
                     <Button type="primary" htmlType="submit" className="login-form-button">
-                    Log in
+                    Log In
                     </Button>
-                    Or <a href="">register now!</a>
+                    or <Link to="/Signup">sign up now!</Link> 
                 </Form.Item>
                 </Form>
             </div>

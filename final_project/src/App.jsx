@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom"
+import { useState , useEffect} from 'react';
+import { BrowserRouter as Router, Routes, Route, Navigate  } from "react-router-dom"
 
 
 import './App.css';
@@ -11,11 +11,20 @@ import Login from './Login';
 import Signup from './Signup';
 import Navbar from './Navbar';
 import LyricsPage from './LyricsPage';
+import Profile from './Profile';
 
 
 function App() {
   const [currentPage, setCurrentPage] = useState('home');
   const [showTabs, setShowTabs] = useState(true); // Control tab visibility
+
+  useEffect(()=>{
+    var token = localStorage.getItem('Token');
+    if (!token) {
+      localStorage.setItem('loggedIn', false);
+    }
+
+  });
 
   
   const handlePageChange = (page) => {
@@ -37,7 +46,7 @@ function App() {
   };
 // PUT LOGO IN OURLOGO SECTION
   return (
-    <div class = "background">
+    <div className = "background">
         <span className = "animation"></span>
    <span className = "animation"></span>
    <span className = "animation"></span>
@@ -95,12 +104,14 @@ function App() {
       <div>
     <Routes>        
       <Route path="/Home"  element={<Home/>} />
+      <Route path="/Profile"  element={<Profile/>} />
       <Route path="/Karaoke"  element={<Karaoke/>} />
       <Route path="/Signup"  element={<Signup />}/>
       <Route path="/Login"  element={<Login/>}/>
       <Route path="/LyricsPage" element={<LyricsPage/>}>
         
       </Route>
+      <Route path="*" element={<Navigate to="/Home" replace />} />
     </Routes>
     </div>
     </div>
