@@ -17,9 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // allow CORS everywhere
 //app.use(cors());
-app.use(cors({
-  origin: 'http://localhost:5173' // Replace with your client-side domain
-}));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.json({ message: "Welcome" });

@@ -1,15 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './Signup.css'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, message } from 'antd';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from './Auth';
 
 
 const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
+  //const [loggedIn, setLoggedIn] = useContext(AuthContext);
 
   const handleSignup = (e) => {
     e.preventDefault();
@@ -28,18 +31,21 @@ const Signup = () => {
         console.log(response.data);
         if (response.data.error) {
           message.error(response.data.error);
+          //setLoggedIn(false);
         } else {
           console.log('Signup successful:', response.data);
           message.success('Signup successful!');
           localStorage.setItem('loggedIn', true);
-          localStorage.setItem('SignInToken', response.data.Token);
+          localStorage.setItem('token', response.data.token);
+          //setLoggedIn(true);
+          navigate('/Profile', { replace: true });
       }
         })
         .catch((error) => {
         // Handle error
         console.error('Error signing up:', error);
         message.error('Error signing up, please try again');
-
+        //setLoggedIn(false);
         }); 
   }; 
 

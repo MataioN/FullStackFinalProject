@@ -29,7 +29,7 @@ async function signup(req, res) {
         var token = jwt.sign({ id: data.id }, 'super_secret_key', { expiresIn: '1h' });
         return res.status(201).json({ success: "Signed up successfully",
                                       username: req.body.Username,
-                                      Token: token });
+                                      token: token });
       });
     } catch (error) {
     console.error("Error signing up:", error);

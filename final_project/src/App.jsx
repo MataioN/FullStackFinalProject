@@ -18,12 +18,12 @@ function App() {
   const [showTabs, setShowTabs] = useState(true); // Control tab visibility
 
   useEffect(()=>{
-    var token = localStorage.getItem('Token');
+    var token = localStorage.getItem('token');
     if (!token) {
       localStorage.setItem('loggedIn', false);
     }
 
-  });
+  }, []);
 
   
   const handlePageChange = (page) => {

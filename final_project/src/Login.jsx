@@ -1,13 +1,16 @@
-import {React, useState } from "react";
+import {React, useState, useEffect, useContext } from "react";
 //import { useHistory } from "react-router'dom";
 import './Login.css'
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, message} from 'antd';
 import axios from 'axios';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
+import { AuthContext } from './Auth';
 
 const Login = () => {
-    const baseUrl = "http://localhost:3001/api/users/"
+    //const [loggedIn, setLoggedIn] = useContext(AuthContext);
+    const baseUrl = "http://localhost:3001/api/users/";
+    const navigate = useNavigate();
     const onFinish = (values) => {
         
         console.log('Received values of form: ', values);
@@ -18,13 +21,16 @@ const Login = () => {
             console.log('Login successful:', response.data);
             message.success('Login successful');
             localStorage.setItem('loggedIn',true);
-
+            localStorage.setItem('token',response.data.token );
+            //setLoggedIn(true);
+            navigate('/Profile', { replace: true });
             })
             .catch((error) => {
             // Handle error
             console.error('Error logging in:', error);
             message.error('Incorrect username or password');
             localStorage.setItem('loggedIn', false);
+            //setLoggedIn(false);
             //resetFields();
             });
 
