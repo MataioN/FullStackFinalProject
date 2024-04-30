@@ -15,6 +15,7 @@ app = Flask(__name__)
 CORS(app)
 
 GENIUS_API_TOKEN= 'DtP-ys_dzjNc76k_1tlslraP6whcgQLIYO_rk1rZLrPacAI8fKKTpNfrICXQmuzw'
+#GENIUS_API_TOKEN= 'IcV6erLM3S15Sbj6oTCKgb5x6zOSVFwZPL2ta1Pe-ue_DxuJonnWn_LRt0O5T43f'
 genius = lyricsgenius.Genius(GENIUS_API_TOKEN)
 
 
@@ -74,5 +75,4 @@ def song_lyrics(song_title, artist_name):
         f.write(lyrics_text3)
     return lyrics_text3
     
-
 

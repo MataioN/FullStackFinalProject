@@ -17,18 +17,14 @@ const Navbar=()=>{
         navigate('/Home', { replace: true });
     };
 
-    
     useEffect(()=>{
-        const handleStorageChange = async () => {
-            const newState = await localStorage.getItem('loggedIn');
+        const newState = localStorage.getItem('loggedIn');
             if (newState == 'true') {
                 setLoggedIn(true);
             } else {
                 setLoggedIn(false);
             }
-        };
-        window.addEventListener('storage', handleStorageChange);
-    }, [loggedIn]); 
+    }, []); 
     return (    
                 <div className='navBar'>
                     <div className='home' >
