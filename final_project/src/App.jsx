@@ -10,6 +10,7 @@ import './background.css';
 import Login from './Login';
 import Signup from './Signup';
 import Navbar from './Navbar';
+import LyricsPage from './LyricsPage';
 import Profile from './Profile';
 
 
@@ -27,7 +28,7 @@ function App() {
 
   
   const handlePageChange = (page) => {
-    setCurrentPage(page);gi
+    setCurrentPage(page);
     setShowTabs(false);
   };
 
@@ -107,6 +108,9 @@ function App() {
       <Route path="/Karaoke"  element={<Karaoke/>} />
       <Route path="/Signup"  element={<Signup />}/>
       <Route path="/Login"  element={<Login/>}/>
+      <Route path="/LyricsPage" element={<LyricsPage/>}>
+        
+      </Route>
       <Route path="*" element={<Navigate to="/Home" replace />} />
     </Routes>
     </div>

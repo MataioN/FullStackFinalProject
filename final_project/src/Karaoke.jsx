@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from "react-router-dom"
 
+import LyricsPage from './LyricsPage';
 import './Karaoke.css';
 import axios from 'axios';
+import cleanLyrics from './cleanLyrics';
+
 
 function Karaoke() {
     const CLIENT_ID = 'af3f950385974164af122690fca30b26';
@@ -65,6 +69,48 @@ function Karaoke() {
         setToken('');
     };
 
+    const [searchQuery, setSearchQuery] = useState(''); // Track user input
+    const [responseData, setResponseData] = useState(null);
+    const navigate = useNavigate();
+
+    
+    const handleSearch = async () => {
+      try {
+        const response = await fetch('/api', {
+            method: "POST",
+            
+            headers:{
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({query: searchQuery}),
+          // Send user input to Flask
+        });
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+  
+        const data = await response.json();  // Get the JSON response
+        setResponseData(data);  // Store the response data in state
+        const cleanedLyrics = cleanLyrics(responseData.data);
+        <LyricsPage data={cleanedLyrics} />
+        navigate('/LyricsPage', {state: { lyrics: cleanedLyrics}});
+        console.log('Responose', cleanedLyrics);// Process the response from Flask
+      } catch (error) {
+        console.error('Error during search:', error); // Handle errors
+      }
+    };
+
+    const DisplayLyrics = ({ lyrics }) => {
+        // Replace carriage returns with newline characters
+        const cleanedLyrics = lyrics.replace(/\r/g, '\n');  // Convert \r to \n
+      
+        return (
+          cleanedLyrics
+        );
+      };
+
+    
     return (
         <div className= "main_div">
             <div >
@@ -92,8 +138,17 @@ function Karaoke() {
             )}
         <div class= "input_ovals">
         <div class="oval">
-            <input type="text" class="oval-input" placeholder="Search for your favorite songs!" />
+            <input type="text" class="oval-input" placeholder="Search for your favorite songs!"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} />
         </div>
+        <button onClick={handleSearch}>Search</button>
+        {/* {responseData && (
+        <div>
+          <h2>Search Result:</h2>
+          <p><DisplayLyrics lyrics={responseData.data}/></p> 
+        </div>
+      )} */}
         <div class="upperOval">
             <input type="text" class="upperOval-input" placeholder="Join a Party" />
         </div>

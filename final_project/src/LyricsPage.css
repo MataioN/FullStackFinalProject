@@ -1,0 +1,55 @@
+/* Customizing scroll bars for WebKit-based browsers (Chrome, Safari) */
+.lyrics-page {
+    overflow-y: auto;  /* Allow vertical scrolling */
+    max-height: 80vh;  /* Limit the height to ensure content fits */
+  
+    /* Customize the scroll bar */
+    &::-webkit-scrollbar {
+      width: 12px;  /* Set the width of the scroll bar */
+    }
+  
+    &::-webkit-scrollbar-track {
+      background: #2b2b2b;  /* Background color of the scroll bar track */
+      border-radius: 6px;  /* Rounded corners for the track */
+    }
+  
+    &::-webkit-scrollbar-thumb {
+      background: #ff6600;  /* Color of the scroll bar thumb */
+      border-radius: 6px;  /* Rounded corners for the thumb */
+      border: 2px solid #2b2b2b;  /* Border to add spacing */
+    }
+  
+    &::-webkit-scrollbar-thumb:hover {
+      background: #ff8800;  /* Change color on hover for better interaction */
+    }
+  }
+  
+  /* Additional scroll bar customization for non-WebKit browsers (limited support) */
+  .lyrics-page {
+    font-family: 'Arial', sans-serif;  /* Consistent font family */
+    padding: 20px;  /* Add padding for spacing */
+    overflow-y: auto;  /* Allow vertical scrolling if needed */
+    max-height: 80vh;  /* Limit height to 80% of the viewport height */
+  }
+  
+  .lyrics-page h2 {
+    color: #ff6600;  /* Bright orange for the heading */
+    font-size: 20px;  /* Slightly reduced font size */
+    font-weight: bold;  /* Bold heading */
+  }
+  
+  .lyrics-page pre {
+    color: #ffffff;  /* Bright white text */
+    background-color: #333333;  /* Dark background for contrast */
+    padding: 10px;  /* Padding around text */
+    border-radius: 5px;  /* Rounded corners */
+    line-height: 1.4;  /* Slightly reduced line height */
+    overflow-y: auto;  /* Allow vertical scrolling within the pre block */
+  }
+  
+  .lyrics-page p {
+    color: #ffffff;  /* Bright white text */
+    font-size: 16px;  /* Slightly reduced font size */
+    margin: 0;  /* No extra margin */
+    padding: 10px;  /* Padding for spacing */
+  }
